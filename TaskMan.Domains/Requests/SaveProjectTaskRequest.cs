@@ -17,5 +17,7 @@ namespace TaskMan.Domains.Requests
         public int StatusId { get; set; }
         public string Status { get; set; }
         public string TaskDescription { get; set; }
+        public string Comment { get; set; }
+        public string References { get; set; }
     }
 }

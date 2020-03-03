@@ -20,13 +20,30 @@ namespace TaskMan.Services.RequestHandlers
         private readonly ITaskService _taskService;
         private readonly IProjectTaskService _projectTaskService;
         private readonly IProjectTaskStatusService _projectTaskStatusService;
+        private readonly IProjectTaskCommentService _projectTaskCommentService;
+        private readonly IProjectTaskReferenceService _projectTaskReferenceService;
+
+        public SaveProjectTask(IProjectService projectService, ITaskService taskService, 
+            IProjectTaskService projectTaskService, IProjectTaskStatusService projectTaskStatusService,
+            IProjectTaskReferenceService projectTaskReferenceService,
+            IProjectTaskCommentService projectTaskCommentService)
+        {
+            _projectService = projectService;
+            _taskService = taskService;
+            _projectTaskService = projectTaskService;
+            _projectTaskStatusService =projectTaskStatusService;
+            _projectTaskReferenceService = projectTaskReferenceService;
+            _projectTaskCommentService = projectTaskCommentService;
+        }
 
         public async Task<SaveProjectTaskResponse> Handle(SaveProjectTaskRequest request, CancellationToken cancellationToken)
         {
             var validationFailures = new List<ValidationFailure>();
-            bool isProjectIdDefault = request.ProjectId == default;
+            var isProjectIdDefault = request.ProjectId == default;
             var isStatusIdDefault = request.StatusId != default;
-            bool isTaskIdDefault = request.TaskId == default;
+            var isTaskIdDefault = request.TaskId == default;
+            var isCommentDefault = string.IsNullOrWhiteSpace(request.Comment);
+            var isReferencesDefault = string.IsNullOrWhiteSpace(request.References);
 
             if(isProjectIdDefault && string.IsNullOrWhiteSpace(request.ProjectName))
                 validationFailures.Add(new ValidationFailure(nameof(request.ProjectName), 
@@ -50,15 +67,27 @@ namespace TaskMan.Services.RequestHandlers
                 : await _taskService.GetTask(request.TaskId, cancellationToken);
 
             var projectTask = (isProjectIdDefault || isTaskIdDefault)
-                ? await _projectTaskService.Save(new ProjectTask { Project = project, Task = task }, isStatusIdDefault)
+                ? await _projectTaskService.Save(new ProjectTask { Project = project, Task = task }, false)
                 : await _projectTaskService.GetProjectTask(project.Id, task.Id);
+
+            if(!isReferencesDefault && _projectTaskReferenceService.TryGetReferences(request.References, out var projectTaskReferences))
+            {
+                foreach(var projectTaskReference in projectTaskReferences)
+                    await _projectTaskReferenceService.Save(projectTaskReference, false, cancellationToken);
+            }
 
             if(!isStatusIdDefault)
             {
                 ProjectTaskStatus currentStatus = await _projectTaskStatusService.GetCurrentStatus(projectTask.Id, cancellationToken);
                 if(currentStatus.StatusId != request.StatusId)
-                    currentStatus = await _projectTaskStatusService.Save(new ProjectTaskStatus { StatusId = request.StatusId, ProjectTask = projectTask },
-                        true, cancellationToken);
+                    await _projectTaskStatusService.Save(new ProjectTaskStatus { StatusId = request.StatusId, ProjectTask = projectTask },
+                        false, cancellationToken);
+            }
+
+            if (!isCommentDefault)
+            {
+               var projectTaskComment = 
+                    await _projectTaskCommentService.Save(new ProjectTaskComment { Value = request.Comment }, false, cancellationToken);
             }
 
             return Response.Success<SaveProjectTaskResponse>(projectTask);
