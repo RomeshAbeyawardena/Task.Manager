@@ -5,11 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DNI.Shared.Services" Version="1.0.1.53" />
     <PackageReference Include="MediatR" Version="8.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\TaskMan.Contracts\TaskMan.Contracts.csproj" />
+    <ProjectReference Include="..\TaskMan.Domains\TaskMan.Domains.csproj" />
   </ItemGroup>
 
 </Project>

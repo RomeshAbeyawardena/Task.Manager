@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TaskMan.Domains.Requests;
 using TaskMan.Domains.ViewModels;
+using ResponseHelper = DNI.Shared.Domains.Response;
 
 namespace TaskMan.Web.Controllers
 {
@@ -26,7 +27,11 @@ namespace TaskMan.Web.Controllers
         {
             var request = _mapper.Map<SaveProjectTaskViewModel, SaveProjectTaskRequest>(model);
             var response = await _mediator.Send(request);
-            return Ok(response);
+
+            if(ResponseHelper.IsSuccessful(response))
+                return Ok(response);
+
+            return BadRequest(response.Errors);
         }
     }
 }
