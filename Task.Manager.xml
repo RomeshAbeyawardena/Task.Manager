@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<installation installDirectory="C:\Source\Repos" projectName="Task.Manager">
+  <projects>
+    <project name="Task.Manager.Web" path="C:\Source\Repos\Task.Manager\Task.Manager.Web" />
+    <project name="Task.Manager.Broker" path="C:\Source\Repos\Task.Manager\Task.Manager.Broker" />
+    <project name="Task.Manager.Contracts" path="C:\Source\Repos\Task.Manager\Task.Manager.Contracts" />
+    <project name="Task.Manager.Data" path="C:\Source\Repos\Task.Manager\Task.Manager.Data" />
+    <project name="Task.Manager.Domains" path="C:\Source\Repos\Task.Manager\Task.Manager.Domains" />
+    <project name="Task.Manager.Services" path="C:\Source\Repos\Task.Manager\Task.Manager.Services" />
+    <project name="Task.Manager.Shared" path="C:\Source\Repos\Task.Manager\Task.Manager.Shared" />
+  </projects>
+</installation>
