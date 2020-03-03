@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Task.Manager.Shared
+namespace TaskMan.Shared
 {
     public class Class1
     {

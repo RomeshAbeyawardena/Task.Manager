@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Task.Manager.Data
+namespace TaskMan.Data
 {
     public class Class1
     {

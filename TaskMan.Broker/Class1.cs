@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Task.Manager.Broker
+namespace TaskMan.Broker
 {
     public class Class1
     {

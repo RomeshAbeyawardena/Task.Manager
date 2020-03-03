@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Task.Manager.Domains
+namespace TaskMan.Domains
 {
     public class Class1
     {
