@@ -23,8 +23,12 @@ namespace TaskMan.Web.Controllers
             _mapper = mapper;
         }
 
+        [HttpPost, Route("project/task/save")]
         public async Task<ActionResult> SaveProjectTask(SaveProjectTaskViewModel model)
         {
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var request = _mapper.Map<SaveProjectTaskViewModel, SaveProjectTaskRequest>(model);
             var response = await _mediator.Send(request);
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using DNI.Shared.Services.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -18,13 +19,21 @@ namespace TaskMan.Web
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.RegisterServiceBroker<ServiceBroker>(options => { 
+            services
+                .AddControllers();
+
+            services
+                .AddDistributedMemoryCache()
+                .RegisterServiceBroker<ServiceBroker>(options => { 
                 options.RegisterAutoMappingProviders = true;
                 options.RegisterCacheProviders = true;
                 options.RegisterExceptionHandlers = true;
                 options.RegisterMediatorServices = true;
                 options.RegisterMessagePackSerialisers = true;
-            }, out var serviceBrokerInstance);
+            }, out var serviceBrokerInstance)
+                .AddAutoMapper(serviceBrokerInstance.Assemblies);
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,10 +48,7 @@ namespace TaskMan.Web
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                endpoints.MapControllers();
             });
         }
     }
