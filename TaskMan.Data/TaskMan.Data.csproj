@@ -8,4 +8,8 @@
     <PackageReference Include="DNI.Shared.Services" Version="1.0.1.55" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TaskMan.Domains\TaskMan.Domains.csproj" />
+  </ItemGroup>
+
 </Project>

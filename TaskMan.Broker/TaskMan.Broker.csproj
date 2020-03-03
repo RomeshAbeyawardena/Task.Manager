@@ -8,4 +8,9 @@
     <PackageReference Include="DNI.Shared.Services" Version="1.0.1.55" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TaskMan.Data\TaskMan.Data.csproj" />
+    <ProjectReference Include="..\TaskMan.Services\TaskMan.Services.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TaskMan.Broker\TaskMan.Broker.csproj" />
     <ProjectReference Include="..\TaskMan.Domains\TaskMan.Domains.csproj" />
   </ItemGroup>
 
