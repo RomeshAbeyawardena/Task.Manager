@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DNI.Shared.Contracts;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using TaskMan.Contracts;
@@ -9,19 +11,29 @@ namespace TaskMan.Services
 {
     public class ProjectTaskService : IProjectTaskService
     {
-        public Task<ProjectTaskStatus> GetCurrentStatus(int id, CancellationToken cancellationToken)
+        private readonly IRepository<ProjectTask> _projectTaskRepository;
+
+        public async System.Threading.Tasks.Task Commit(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            await _projectTaskRepository.Commit(cancellationToken);
         }
 
-        public Task<ProjectTask> GetProjectTask(int projectId, int taskId)
+        public async Task<ProjectTask> GetProjectTask(int projectId, int taskId, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return await _projectTaskRepository
+                .Query(pT => pT.ProjectId == projectId && pT.TaskId == taskId)
+                .SingleOrDefaultAsync(cancellationToken);
         }
 
-        public Task<ProjectTask> Save(ProjectTask projectTask, bool saveChanges)
+        public async Task<ProjectTask> Save(ProjectTask projectTask, bool saveChanges, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return await _projectTaskRepository
+                .SaveChanges(projectTask, saveChanges, true, cancellationToken);
+        }
+
+        public ProjectTaskService(IRepository<ProjectTask> projectTaskRepository)
+        {
+            _projectTaskRepository = projectTaskRepository;
         }
     }
 }

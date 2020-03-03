@@ -11,5 +11,7 @@ namespace TaskMan.Domains.Data
         public int Id { get; set; }
         public Project Project { get; set; }
         public Task Task { get; set; }
+        public int ProjectId { get; set; }
+        public int TaskId { get; set; }
     }
 }

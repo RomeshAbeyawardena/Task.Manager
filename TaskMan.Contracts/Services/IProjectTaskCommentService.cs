@@ -10,6 +10,6 @@ namespace TaskMan.Contracts.Services
 {
     public interface IProjectTaskCommentService
     {
-        Task<ProjectTaskComment> Save(ProjectTaskComment projectTaskComment, bool v, CancellationToken cancellationToken);
+        Task<ProjectTaskComment> Save(ProjectTaskComment projectTaskComment, bool saveChanges, CancellationToken cancellationToken);
     }
 }

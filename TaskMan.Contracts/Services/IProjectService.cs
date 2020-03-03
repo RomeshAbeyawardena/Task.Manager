@@ -11,7 +11,7 @@ namespace TaskMan.Contracts.Services
     public interface IProjectService
     {
         Task<Project> GetProject(string projectName, CancellationToken cancellationToken);
-        Task<Project> Save(Project project, bool v, CancellationToken cancellationToken);
+        Task<Project> Save(Project project, bool saveChanges, CancellationToken cancellationToken);
         Task<Project> GetProject(int projectId, CancellationToken cancellationToken);
     }
 }

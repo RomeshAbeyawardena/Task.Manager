@@ -8,6 +8,7 @@ namespace TaskMan.Domains.Data
 {
     public class ProjectTaskReference
     {
-        
+        public string ReferenceType { get; set; }
+        public string Reference { get; set; }
     }
 }

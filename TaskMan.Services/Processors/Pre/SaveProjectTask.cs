@@ -18,6 +18,14 @@ namespace TaskMan.Services.Processors.Pre
         private readonly IProjectService _projectService;
         private readonly IStatusService _statusService;
 
+        public SaveProjectTask(ITaskService taskService, 
+            IProjectService projectService, IStatusService statusService)
+        {
+            _taskService = taskService;
+            _projectService = projectService;
+            _statusService = statusService;
+        }
+
         public async System.Threading.Tasks.Task Process(SaveProjectTaskRequest request, CancellationToken cancellationToken)
         {
             Project foundProject;

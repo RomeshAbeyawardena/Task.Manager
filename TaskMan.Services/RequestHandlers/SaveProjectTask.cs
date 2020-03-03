@@ -67,10 +67,12 @@ namespace TaskMan.Services.RequestHandlers
                 : await _taskService.GetTask(request.TaskId, cancellationToken);
 
             var projectTask = (isProjectIdDefault || isTaskIdDefault)
-                ? await _projectTaskService.Save(new ProjectTask { Project = project, Task = task }, false)
-                : await _projectTaskService.GetProjectTask(project.Id, task.Id);
+                ? await _projectTaskService.Save(new ProjectTask { Project = project, Task = task }, false, 
+                    cancellationToken)
+                : await _projectTaskService.GetProjectTask(project.Id, task.Id, cancellationToken);
 
-            if(!isReferencesDefault && _projectTaskReferenceService.TryGetReferences(request.References, out var projectTaskReferences))
+            if(!isReferencesDefault 
+                && _projectTaskReferenceService.TryGetReferences(request.References, out var projectTaskReferences))
             {
                 foreach(var projectTaskReference in projectTaskReferences)
                     await _projectTaskReferenceService.Save(projectTaskReference, false, cancellationToken);
@@ -89,6 +91,8 @@ namespace TaskMan.Services.RequestHandlers
                var projectTaskComment = 
                     await _projectTaskCommentService.Save(new ProjectTaskComment { Value = request.Comment }, false, cancellationToken);
             }
+
+            await _projectTaskService.Commit(cancellationToken);
 
             return Response.Success<SaveProjectTaskResponse>(projectTask);
         }
