@@ -9,6 +9,7 @@ using TaskMan.Domains.Requests;
 using TaskMan.Domains.Responses;
 using TaskMan.Domains.Data;
 using TaskMan.Contracts.Services;
+using TaskMan.Contracts.Providers;
 
 namespace TaskMan.Services.Processors.Pre
 {
@@ -17,13 +18,16 @@ namespace TaskMan.Services.Processors.Pre
         private readonly ITaskService _taskService;
         private readonly IProjectService _projectService;
         private readonly IStatusService _statusService;
+        private readonly ITaskManCacheProvider _taskManCacheProvider;
 
         public SaveProjectTask(ITaskService taskService, 
-            IProjectService projectService, IStatusService statusService)
+            IProjectService projectService, IStatusService statusService, 
+            ITaskManCacheProvider taskManCacheProvider)
         {
             _taskService = taskService;
             _projectService = projectService;
             _statusService = statusService;
+            _taskManCacheProvider = taskManCacheProvider;
         }
 
         public async System.Threading.Tasks.Task Process(SaveProjectTaskRequest request, CancellationToken cancellationToken)
@@ -31,7 +35,7 @@ namespace TaskMan.Services.Processors.Pre
             Project foundProject;
             Domains.Data.Task foundTask;
             Status foundStatus;
-
+            
             if(request.TaskId == default
                    && (foundTask = await _taskService.GetTask(request.TaskReference, cancellationToken)) != null)
                 request.TaskId = foundTask.Id;
@@ -40,8 +44,10 @@ namespace TaskMan.Services.Processors.Pre
                 && (foundProject = await _projectService.GetProject(request.ProjectName, cancellationToken)) != null)
                 request.ProjectId = foundProject.Id;
 
-            if(request.StatusId == default
-                && (foundStatus = await _statusService.GetStatus(request.Status, cancellationToken)) != null)
+            var statuses = _taskManCacheProvider.GetStatuses(cancellationToken);
+
+            if (request.StatusId == default
+                && (foundStatus = _statusService.GetStatus(await statuses, request.Status)) != null)
                 request.StatusId = foundStatus.Id;
         }
     }
