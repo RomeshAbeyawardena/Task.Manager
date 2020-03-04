@@ -1,5 +1,4 @@
 ﻿using DNI.Shared.Contracts;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,9 +19,11 @@ namespace TaskMan.Services
 
         public async Task<ProjectTask> GetProjectTask(int projectId, int taskId, CancellationToken cancellationToken)
         {
-            return await _projectTaskRepository
-                .Query(pT => pT.ProjectId == projectId && pT.TaskId == taskId)
-                .SingleOrDefaultAsync(cancellationToken);
+            var query = _projectTaskRepository
+                .Query(pT => pT.ProjectId == projectId && pT.TaskId == taskId);
+
+                return await _projectTaskRepository.For(query)
+                    .ToSingleOrDefaultAsync(cancellationToken);
         }
 
         public async Task<ProjectTask> Save(ProjectTask projectTask, bool saveChanges, CancellationToken cancellationToken)

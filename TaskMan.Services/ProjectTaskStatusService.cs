@@ -1,5 +1,4 @@
 ﻿using DNI.Shared.Contracts;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +21,8 @@ namespace TaskMan.Services
                         orderby projectTaskStatus.Modified, projectTaskStatus.Created descending
                         select projectTaskStatus;
 
-            return await query.FirstOrDefaultAsync();
+            return await _projectTaskStatusRepository.For(query)
+                .ToFirstOrDefaultAsync(cancellationToken);
 
         }
 

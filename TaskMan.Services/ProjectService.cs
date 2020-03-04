@@ -17,8 +17,9 @@ namespace TaskMan.Services
 
         public async Task<Project> GetProject(string projectName, CancellationToken cancellationToken)
         {
-            return await _projectRepository.Query(project => project.Name == projectName)
-                .SingleOrDefaultAsync(cancellationToken);
+            var query = _projectRepository.Query(project => project.Name == projectName);
+
+            return await _projectRepository.For(query).ToSingleOrDefaultAsync(cancellationToken);
         }
 
         public async Task<Project> GetProject(int projectId, CancellationToken cancellationToken)

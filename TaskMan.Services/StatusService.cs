@@ -13,19 +13,21 @@ namespace TaskMan.Services
 {
     public class StatusService : IStatusService
     {
-        private IRepository<Status> _statusRepository;
+        private readonly IRepository<Status> _statusRepository;
 
         public async Task<IEnumerable<Status>> GetStatuses(CancellationToken cancellationToken)
         {
             var query = from status in _statusRepository.Query(enableTracking: false)
                    select status;
 
-            return await query.ToArrayAsync();
+            return await _statusRepository
+                .For(query)
+                .ToArrayAsync(cancellationToken);
         }
 
-        public Status GetStatus(IEnumerable<Status> statuses, string status, CancellationToken cancellationToken)
+        public Status GetStatus(IEnumerable<Status> statuses, string statusText)
         {
-            throw new NotImplementedException();
+            return statuses.FirstOrDefault(status => status.Name == statusText);
         }
 
         public StatusService(IRepository<Status> statusRepository)
