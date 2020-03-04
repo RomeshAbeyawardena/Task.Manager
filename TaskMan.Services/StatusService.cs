@@ -30,6 +30,13 @@ namespace TaskMan.Services
             return statuses.FirstOrDefault(status => status.Name == statusText);
         }
 
+        public async Task<int> GetMaxIdValue(CancellationToken cancellationToken)
+        {
+            var query = _statusRepository.Query().OrderBy(status => status.Id);
+            return await _statusRepository.For(query)
+                .ToMaxAsync(status => status.Id, cancellationToken);
+        }
+
         public StatusService(IRepository<Status> statusRepository)
         {
             _statusRepository = statusRepository;

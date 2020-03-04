@@ -10,6 +10,7 @@ namespace TaskMan.Contracts.Services
 {
     public interface IStatusService
     {
+        Task<int> GetMaxIdValue(CancellationToken cancellationToken);
         Status GetStatus(IEnumerable<Status> statuses, string status);
         Task<IEnumerable<Status>> GetStatuses(CancellationToken cancellationToken);
     }

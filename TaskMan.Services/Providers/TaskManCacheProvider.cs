@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using TaskMan.Contracts.Providers;
 using TaskMan.Contracts.Services;
+using TaskMan.Domains.Constants;
 using TaskMan.Domains.Data;
 
 namespace TaskMan.Services.Providers
@@ -21,8 +22,9 @@ namespace TaskMan.Services.Providers
         {
             return await _cacheProvider
                 .GetOrSet(CacheType.DistributedMemoryCache, CacheConstants.StatusCache, 
-                async() => await _statusService.GetStatuses(cancellationToken), 
-                cancellationToken);
+                    async(ct) => await _statusService.GetStatuses(ct),
+                status => status.Id, async(ct) => await _statusService.GetMaxIdValue(ct), false,
+                cancellationToken);;
         }
 
         public TaskManCacheProvider(ICacheProvider cacheProvider, IStatusService statusService)

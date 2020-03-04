@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
 using DNI.Shared.Services.Extensions;
@@ -20,7 +21,7 @@ namespace TaskMan.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddControllers();
+                .AddControllersWithViews();
 
             services
                 .AddDistributedMemoryCache()
@@ -31,7 +32,7 @@ namespace TaskMan.Web
                 options.RegisterMediatorServices = true;
                 options.RegisterMessagePackSerialisers = true;
             }, out var serviceBrokerInstance)
-                .AddAutoMapper(serviceBrokerInstance.Assemblies);
+                .AddAutoMapper(Assembly.GetAssembly(typeof(Domains.DomainProfile)));
 
 
         }

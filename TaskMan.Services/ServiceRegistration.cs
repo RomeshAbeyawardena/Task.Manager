@@ -27,7 +27,7 @@ namespace TaskMan.Services
                 .AddMediatR(Assembly.GetAssembly(typeof(ServiceRegistration)));
 
             services.Scan(scan => scan.FromAssemblyOf<ServiceRegistration>()
-            .AddClasses(a => a.Where(t => t.Name.EndsWith("Service")))
+            .AddClasses(a => a.Where(t => t.Name.EndsWith("Service") || t.Name.EndsWith("Provider")))
                 .AsImplementedInterfaces()
                     .WithTransientLifetime());
         }
