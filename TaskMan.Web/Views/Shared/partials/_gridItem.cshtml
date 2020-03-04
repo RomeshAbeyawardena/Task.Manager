@@ -1,0 +1,47 @@
+﻿@model ProjectTaskViewModel
+
+@{
+    var formattedDate = Html
+        .FormatValue(Model.Date, FormatConstants
+            .ShortDateFormat.AppendFormat());
+}
+
+<div class="col">
+    <input type="text" 
+           readonly="readonly" 
+           value="@formattedDate" />
+</div>
+<div class="col">
+    <input type="text"
+           @Html.DisplayIf(Model.IsNew, "readonly=\"readonly\"")
+           value="@Model.TaskReference"
+           name="@Html.NameFor(model => model.TaskReference)" />
+</div>>
+<div class="col">
+    <input type="text" 
+           value="@Model.ProjectName" />
+    <input type="hidden" 
+           value="@Model.ProjectId" 
+           name="@Html.NameFor(model => model.ProjectId)" />
+</div>
+<div class="col">
+    <input type="text" 
+           value="@Model.TaskDescription" 
+           name="@Html.NameFor(model => model.TaskDescription)" />
+
+    <input type="hidden" 
+           value="@Model.TaskId" 
+           name="@Html.NameFor(model => model.TaskId)" />
+</div>
+<div class="col">
+    <input type="text" 
+           value="@Model.Status" />
+
+    <input type="hidden" 
+           value="@Model.StatusId"
+           name="@Html.NameFor(model => model.StatusId)" />
+</div>
+<div class="col">
+    <input type="text" 
+           value="@Model.Comments" />
+</div>

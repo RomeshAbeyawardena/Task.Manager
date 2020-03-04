@@ -33,7 +33,7 @@ namespace TaskMan.Web.Controllers
             var response = await _mediator.Send(request);
 
             if(ResponseHelper.IsSuccessful(response))
-                return Ok(response);
+                return Ok(response.Result);
 
             return BadRequest(response.Errors);
         }

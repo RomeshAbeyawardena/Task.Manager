@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TaskMan.Broker;
+using FluentValidation.AspNetCore;
 
 namespace TaskMan.Web
 {
@@ -31,8 +32,14 @@ namespace TaskMan.Web
                 options.RegisterExceptionHandlers = true;
                 options.RegisterMediatorServices = true;
                 options.RegisterMessagePackSerialisers = true;
-            }, out var serviceBrokerInstance)
-                .AddAutoMapper(Assembly.GetAssembly(typeof(Domains.DomainProfile)));
+            }, out var serviceBrokerInstance);
+
+            services.AddAutoMapper(Assembly.GetAssembly(typeof(Domains.DomainProfile)));
+
+            services
+                .AddMvc()
+                .AddFluentValidation(configuration => configuration
+                .RegisterValidatorsFromAssemblies(serviceBrokerInstance.Assemblies));
 
 
         }

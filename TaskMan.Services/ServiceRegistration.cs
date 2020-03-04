@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using TaskMan.Domains;
 using TaskMan.Domains.Constants;
 using MediatR;
+using FluentValidation;
 
 namespace TaskMan.Services
 {
@@ -25,7 +26,7 @@ namespace TaskMan.Services
                 .RegisterCryptographicCredentialsFactory<AppCryptographicCredentials>(
                     RegisterCryptographicCredentialsFactory)
                 .AddMediatR(Assembly.GetAssembly(typeof(ServiceRegistration)));
-
+            
             services.Scan(scan => scan.FromAssemblyOf<ServiceRegistration>()
             .AddClasses(a => a.Where(t => t.Name.EndsWith("Service") || t.Name.EndsWith("Provider")))
                 .AsImplementedInterfaces()

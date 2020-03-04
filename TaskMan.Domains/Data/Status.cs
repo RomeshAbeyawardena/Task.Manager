@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace TaskMan.Domains.Data
 {
+    [MessagePack.MessagePackObject(true)]
     public class Status
     {
         [Key]
