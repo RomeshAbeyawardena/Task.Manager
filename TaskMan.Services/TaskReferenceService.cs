@@ -12,21 +12,21 @@ using TaskMan.Domains.Options;
 
 namespace TaskMan.Services
 {
-    public class ProjectTaskReferenceService : IProjectTaskReferenceService
+    public class TaskReferenceService : ITaskReferenceService
     {
         private readonly IOptions<ProjectTaskReferenceOptions> _options;
-        private readonly IRepository<ProjectTaskReference> _projectTaskReferenceRepository;
+        private readonly IRepository<TaskReference> _projectTaskReferenceRepository;
 
-        public async Task<ProjectTaskReference> Save(ProjectTaskReference projectTaskReference, 
+        public async Task<TaskReference> Save(TaskReference projectTaskReference, 
             bool saveChanges, CancellationToken cancellationToken)
         {
             return await _projectTaskReferenceRepository
                 .SaveChanges(projectTaskReference, saveChanges, true, cancellationToken);
         }
 
-        public bool TryGetReferences(string references, out IEnumerable<ProjectTaskReference> projectTaskReferences)
+        public bool TryGetReferences(string references, out IEnumerable<TaskReference> projectTaskReferences)
         {
-            var projectTaskReferenceList = new List<ProjectTaskReference>();
+            var projectTaskReferenceList = new List<TaskReference>();
 
             var optionValue = _options.Value;
             foreach(var reference in references
@@ -37,7 +37,7 @@ namespace TaskMan.Services
                     continue;
 
                 projectTaskReferenceList
-                    .Add(new ProjectTaskReference { ReferenceType = refs[0], Reference = refs[1] });
+                    .Add(new TaskReference { ReferenceType = refs[0], Reference = refs[1] });
             }
 
             projectTaskReferences = projectTaskReferenceList.ToArray();
@@ -45,8 +45,8 @@ namespace TaskMan.Services
             return projectTaskReferenceList.Count > 0;
         }
 
-        public ProjectTaskReferenceService(IOptions<ProjectTaskReferenceOptions> options, 
-            IRepository<ProjectTaskReference> projectTaskReferenceRepository)
+        public TaskReferenceService(IOptions<ProjectTaskReferenceOptions> options, 
+            IRepository<TaskReference> projectTaskReferenceRepository)
         {
             _options = options;
             _projectTaskReferenceRepository = projectTaskReferenceRepository;

@@ -21,11 +21,11 @@ namespace TaskMan.Services.RequestHandlers
         private readonly IProjectTaskService _projectTaskService;
         private readonly IProjectTaskStatusService _projectTaskStatusService;
         private readonly IProjectTaskCommentService _projectTaskCommentService;
-        private readonly IProjectTaskReferenceService _projectTaskReferenceService;
+        private readonly ITaskReferenceService _projectTaskReferenceService;
 
         public SaveProjectTask(IProjectService projectService, ITaskService taskService, 
             IProjectTaskService projectTaskService, IProjectTaskStatusService projectTaskStatusService,
-            IProjectTaskReferenceService projectTaskReferenceService,
+            ITaskReferenceService projectTaskReferenceService,
             IProjectTaskCommentService projectTaskCommentService)
         {
             _projectService = projectService;
@@ -89,7 +89,7 @@ namespace TaskMan.Services.RequestHandlers
             if (!isCommentDefault)
             {
                var projectTaskComment = 
-                    await _projectTaskCommentService.Save(new ProjectTaskComment { Value = request.Comment }, false, cancellationToken);
+                    await _projectTaskCommentService.Save(new ProjectTaskComment { Comment = request.Comment }, false, cancellationToken);
             }
 
             await _projectTaskService.Commit(cancellationToken);

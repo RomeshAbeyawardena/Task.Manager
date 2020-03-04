@@ -9,15 +9,13 @@ using System.Threading.Tasks;
 
 namespace TaskMan.Domains.Data
 {
-    public class ProjectTask
+    public class TaskReference
     {
         [Key]
         public int Id { get; set; }
-        public Project Project { get; set; }
-        public Task Task { get; set; }
-        public int ProjectId { get; set; }
         public int TaskId { get; set; }
-        public DateTimeOffset? Due { get; set; }
+        public string ReferenceType { get; set; }
+        public string Reference { get; set; }
         
         [Modifier(ModifierFlag.Created)]
         public DateTimeOffset Created { get; set; }

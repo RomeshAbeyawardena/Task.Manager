@@ -22,7 +22,7 @@ namespace TaskMan.Data
             services
                 .RegisterDbContextRepositories<TaskManDbContext>(ServiceLifetime.Transient,
                 typeof(Project),typeof(Task),typeof(ProjectTask),
-                typeof(ProjectTaskComment),typeof(ProjectTaskReference),
+                typeof(ProjectTaskComment),typeof(TaskReference),
                 typeof(ProjectTaskStatus), typeof(Status));
         }
     }
