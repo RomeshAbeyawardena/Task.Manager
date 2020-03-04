@@ -21,18 +21,18 @@ namespace TaskMan.Services.RequestHandlers
         private readonly IProjectTaskService _projectTaskService;
         private readonly IProjectTaskStatusService _projectTaskStatusService;
         private readonly IProjectTaskCommentService _projectTaskCommentService;
-        private readonly ITaskReferenceService _projectTaskReferenceService;
+        private readonly ITaskReferenceService _taskReferenceService;
 
         public SaveProjectTask(IProjectService projectService, ITaskService taskService, 
             IProjectTaskService projectTaskService, IProjectTaskStatusService projectTaskStatusService,
-            ITaskReferenceService projectTaskReferenceService,
+            ITaskReferenceService taskReferenceService,
             IProjectTaskCommentService projectTaskCommentService)
         {
             _projectService = projectService;
             _taskService = taskService;
             _projectTaskService = projectTaskService;
             _projectTaskStatusService =projectTaskStatusService;
-            _projectTaskReferenceService = projectTaskReferenceService;
+            _taskReferenceService = taskReferenceService;
             _projectTaskCommentService = projectTaskCommentService;
         }
 
@@ -72,10 +72,10 @@ namespace TaskMan.Services.RequestHandlers
                 : await _projectTaskService.GetProjectTask(project.Id, task.Id, cancellationToken);
 
             if(!isReferencesDefault 
-                && _projectTaskReferenceService.TryGetReferences(request.References, out var projectTaskReferences))
+                && _taskReferenceService.TryGetReferences(request.References, out var taskReferences))
             {
-                foreach(var projectTaskReference in projectTaskReferences)
-                    await _projectTaskReferenceService.Save(projectTaskReference, false, cancellationToken);
+                foreach(var taskReference in taskReferences)
+                    await _taskReferenceService.Save(taskReference, false, cancellationToken);
             }
 
             if(!isStatusIdDefault)
