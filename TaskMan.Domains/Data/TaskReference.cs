@@ -20,8 +20,7 @@ namespace TaskMan.Domains.Data
         [Modifier(ModifierFlag.Created)]
         public DateTimeOffset Created { get; set; }
 
-        [Modifier(ModifierFlag.Created 
-                    | ModifierFlag.Modified)]
+        [Modifier(ModifierFlag.Created | ModifierFlag.Modified)]
         public DateTimeOffset Modified { get; set; }
     }
 }
