@@ -7,39 +7,45 @@
 }
 
 <div class="col">
-    <input type="text" 
-           readonly="readonly" 
-           value="@formattedDate" />
+    <input-group :input-is-read-only="true"
+                 :input-value="@formattedDate"
+                 :input-type="text"
+                 :input-hidden-visible="false">
+    </input-group>
 </div>
 <div class="col">
-    <input type="text"
-           @Html.DisplayIf(Model.IsNew, "readonly=\"readonly\"")
-           value="@Model.TaskReference"
-           name="@Html.NameFor(model => model.TaskReference)" />
+    <input-group :input-is-read-only="true"
+                 :input-value="@Model.TaskReference"
+                 :input-type="text"
+                 :input-hidden-visible="false">
+    </input-group>
 </div>>
 <div class="col">
-    <input type="text" 
-           value="@Model.ProjectName" />
-    <input type="hidden" 
-           value="@Model.ProjectId" 
-           name="@Html.NameFor(model => model.ProjectId)" />
+    <input-group :input-is-read-only="true"
+                 :input-value="@Model.ProjectName"
+                 :input-type="text"
+                 :input-hidden-visible="true"
+                 :input-hidden-value="@Model.ProjectId"
+                 :input-hidden-name="@Html.NameFor(model => model.ProjectId)">
+    </input-group>
 </div>
 <div class="col">
-    <input type="text" 
-           value="@Model.TaskDescription" 
-           name="@Html.NameFor(model => model.TaskDescription)" />
-
-    <input type="hidden" 
-           value="@Model.TaskId" 
-           name="@Html.NameFor(model => model.TaskId)" />
+    <input-group :input-is-read-only="false"
+                 :input-value="@Model.TaskDescription"
+                 :input-type="text"
+                 :input-hidden-visible="true"
+                 :input-hidden-value="@Model.TaskId"
+                 :input-hidden-name="@Html.NameFor(model => model.TaskId)">
+    </input-group>
 </div>
 <div class="col">
-    <input type="text" 
-           value="@Model.Status" />
-
-    <input type="hidden" 
-           value="@Model.StatusId"
-           name="@Html.NameFor(model => model.StatusId)" />
+    <input-group :input-is-read-only="false"
+                 :input-value="@Model.Status"
+                 :input-type="text"
+                 :input-hidden-visible="true"
+                 :input-hidden-value="@Model.StatusId"
+                 :input-hidden-name="@Html.NameFor(model => model.StatusId)">
+    </input-group>
 </div>
 <div class="col">
     <input type="text" 

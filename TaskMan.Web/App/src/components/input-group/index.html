@@ -1,0 +1,19 @@
+﻿<div>
+    <input v-if="!input.readOnly"
+           :type="input.type"
+           :value="input.value"
+           :name="input.name"
+           v-on:change="inputChange" />
+
+    <input v-if="input.readOnly"
+           readonly="readonly"
+           :type="input.type"
+           :value="input.value"
+           :name="input.name" />
+
+    <input v-if="hiddenInput.visible"
+           type="hidden"
+           :name="hiddenInput.name"
+           :value="hiddenInput.value"
+           v-on:change="hiddenInputChange" />
+</div>

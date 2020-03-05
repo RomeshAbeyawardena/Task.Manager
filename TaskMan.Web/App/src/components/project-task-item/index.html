@@ -1,0 +1,57 @@
+﻿<div>
+    <div class="row" v-for="projectTask of projectTasks">
+        <div class="col">
+            <input-group :input-is-read-only="true"
+                         :input-value="projectTask.Task.Date | date"
+                         input-type="text"
+                         :input-hidden-visible="false">
+            </input-group>
+        </div>
+        <div class="col">
+            <input-group :input-is-read-only="false"
+                         :input-value="projectTask.Project.Name"
+                         input-type="text"
+                         :input-hidden-visible="true"
+                         :input-hidden-value="projectTask.ProjectId"
+                         input-hidden-name="ProjectId"
+                         :input-data-source-text-id="projectTextId"
+                         :input-data-source-value-id="projectValueId">
+            </input-group>
+        </div>
+        <div class="col">
+            <input-group :input-is-read-only="true"
+                         :input-value="projectTask.Task.Reference"
+                         input-type="text"
+                         :input-hidden-visible="false">
+            </input-group>
+        </div>
+        <div class="col">
+            <input-group :input-is-read-only="false"
+                         :input-value="projectTask.Task.Description"
+                         input-type="text"
+                         :input-hidden-visible="true"
+                         :input-hidden-value="projectTask.TaskId"
+                         input-hidden-name="TaskId">
+            </input-group>
+        </div>
+        <div class="col">
+            <input-group :input-is-read-only="false"
+                         :input-value="projectTask.Status.Name"
+                         input-type="text"
+                         :input-hidden-visible="true"
+                         :input-hidden-value="projectTask.StatusId"
+                         input-hidden-name="StatusId"
+                         :input-data-source="statuses"
+                         :input-data-source-text-id="statusTextId"
+                         :input-data-source-value-id="statusValueId">
+            </input-group>
+        </div>
+        <div class="col">
+            <input-group :input-is-read-only="false"
+                         :input-value="projectTask.Comment"
+                         :input-name="Comment"
+                         input-type="text">
+            </input-group>
+        </div>
+    </div>
+</div>
