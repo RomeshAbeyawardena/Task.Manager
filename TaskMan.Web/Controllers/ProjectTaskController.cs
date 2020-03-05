@@ -12,15 +12,11 @@ using ResponseHelper = DNI.Shared.Domains.Response;
 
 namespace TaskMan.Web.Controllers
 {
-    public class ProjectTaskController : Controller
+    public class ProjectTaskController : ControllerBase
     {
-        private readonly IMediator _mediator;
-        private readonly IMapper _mapper;
-
         public ProjectTaskController(IMediator mediator, IMapper mapper)
+            : base(mediator, mapper)
         {
-            _mediator = mediator;
-            _mapper = mapper;
         }
 
         [HttpPost, Route("project/task/save")]
@@ -29,8 +25,8 @@ namespace TaskMan.Web.Controllers
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var request = _mapper.Map<SaveProjectTaskViewModel, SaveProjectTaskRequest>(model);
-            var response = await _mediator.Send(request);
+            var request = Mapper.Map<SaveProjectTaskViewModel, SaveProjectTaskRequest>(model);
+            var response = await Mediator.Send(request);
 
             if(ResponseHelper.IsSuccessful(response))
                 return Ok(response.Result);

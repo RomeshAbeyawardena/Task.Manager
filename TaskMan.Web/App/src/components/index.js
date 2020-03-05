@@ -1,9 +1,9 @@
 ﻿import inputGroupComponent from './input-group';
-import projectTaskItem from './project-task-item';
+import projectTaskItem from './project-task-list';
 
 const components  = {
     "input-group": inputGroupComponent,
-    "project-task-item":projectTaskItem
+    "project-task-list":projectTaskItem
 };
 
 export default components;

@@ -1,8 +1,8 @@
 ﻿import TypeAhead from "type-ahead";
-
+import Vue from "vue";
 const template = require("./index.html");
 
-const defaultComponent = {
+const defaultComponent = Vue.component({
     template: template,
     props: {
         inputIsReadOnly: Boolean,
@@ -100,6 +100,6 @@ const defaultComponent = {
         const $inputEl = this.$el.querySelector("input[type='text']");
         this.bindDataSource($inputEl);
     }
-};
+});
 
 export default defaultComponent;

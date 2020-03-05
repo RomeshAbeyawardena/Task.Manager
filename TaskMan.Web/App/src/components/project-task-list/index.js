@@ -4,8 +4,8 @@ const template = require("./index.html");
 const defaultComponent = {
     props: {
         getProjectTaskRequestUrl:String,
-        getProjectsRequest:String,
-        getStatusesRequest:String,
+        getProjectsRequestUrl:String,
+        getStatusesRequestUrl:String,
         projectTextId:String,
         projectValueId:String,
         statusTextId:String,
@@ -21,17 +21,17 @@ const defaultComponent = {
     methods: {
         getProjectTaskRequest(data) {
             const context = this;
-            return Axios.get(this.getProjectTaskRequest, data)
+            return Axios.get(this.getProjectTaskRequestUrl, data)
                 .then(e => context.projectTasks = e.data);
         },
         getProjects(data) {
             const context = this;
-            return Axios.get(this.getProjectsRequest, data)
+            return Axios.get(this.getProjectsRequestUrl, data)
                 .then(e => context.projects = e.data);
         },
         getStatuses(data) {
             const context = this;
-            return Axios.get(this.getStatusesRequest, data)
+            return Axios.get(this.getStatusesRequestUrl, data)
                 .then(e => context.statuses = e.data);
         }
     }
