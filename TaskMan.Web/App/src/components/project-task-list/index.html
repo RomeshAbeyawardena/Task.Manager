@@ -1,4 +1,5 @@
 ﻿<div>
+    <p v-if="!projectTasks || !projectTasks.length">No project tasks available</p>
     <div class="row" v-for="projectTask of projectTasks">
         <div class="col">
             <input-group :input-is-read-only="true"

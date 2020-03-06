@@ -14,7 +14,9 @@ $(() => {
             
         },
         methods: {
-            
+            onError(e) {
+                console.log(e);
+            }
         },
         components: Components
     });
